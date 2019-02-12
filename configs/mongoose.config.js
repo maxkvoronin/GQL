@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://cluster0-shard-00-00-zcbxr.mongodb.net:27017/main', {
+mongoose.connect('mongodb+srv://cluster0-zcbxr.mongodb.net/test', {
   user: 'test',
   pass: 'test',
   useNewUrlParser: true
