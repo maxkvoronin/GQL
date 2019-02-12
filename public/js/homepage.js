@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         posts.forEach(post => {
+            console.log(post.picture);
             feed.innerHTML += (post.editable) ?
                 `<li class="rv b agz">
               <img class="bos vb yb aff" src="${post.author.avatarUrl}">
@@ -70,11 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
                   <h6><a href="/profile?id=${post.author._id}">${post.author.firstName} ${post.author.lastName}</a></h6>
                 </div>
                 <p>${post.text.replace(new RegExp(searchInput.value, 'g'), '<strong>'+searchInput.value+'</strong>')}
-                </p>
-    
-                <div class="boy" data-grid="images"><img style="display: inline-block; width: 346px; height: 335px; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;" data-width="640" data-height="640" data-action="zoom" src="${post.picture}"></div>
-                
-                <button class="cg ${post.isLiked ? 'nq' : 'ns'}" type="button" for="like" data-id="${post._id}">
+                </p>` +
+                ((post.picture) ? `<div class="boy" data-grid="images"><img style="display: inline-block; width: 346px; height: 335px; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;" data-width="640" data-height="640" data-action="zoom" src="${post.picture}"></div>` : ``)
+                +
+                `<button class="cg ${post.isLiked ? 'nq' : 'ns'}" type="button" for="like" data-id="${post._id}">
                   <span class="h bmc" for="like" data-id="${post._id}"></span>
                   ${post.isLiked ? 'Liked!' : 'Like'}
                 </button>
@@ -406,8 +406,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(res => res.json())
             .then(post => {
                 postTextEdit.value = post.text;
-                postImageEdit.setAttribute('src', `${post.picture}`);
-
+                if (post.picture) {
+                    postImageEdit.setAttribute('src', `${post.picture}`);
+                } else {
+                    postImageEdit.removeAttribute('src');
+                }
                 postAttachEdit.addEventListener('change', (event) => {
                     if (event.target.files && event.target.files[0]) {
                         const reader = new FileReader();
