@@ -27,9 +27,10 @@ app.set('view engine', 'hbs');
 
 app.use(fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }));
 
-app.use(logger('dev', {
-  skip: req => req.url.match(/(js|jpg|png|ico|css|woff|woff2|eot)$/ig)
-}));
+// app.use(logger('dev', {
+//   skip: req => req.url.match(/(js|jpg|png|ico|css|woff|woff2|eot)$/ig)
+// }));
+app.use(logger('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
