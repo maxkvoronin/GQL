@@ -8,6 +8,7 @@ const fileUpload = require('express-fileupload');
 
 const passport = require('passport');
 require('./configs/passport.config')(passport);
+const m = require('./configs/mongoose.config');
 
 const indexRouter = require('./routes/index');
 const loginPageRouter = require('./routes/login');
@@ -18,8 +19,11 @@ const apiPostsRouter = require('./routes/posts');
 
 const app = express();
 
-app.use(passport.initialize());
+m.connection.once('connected', function() {
+  app.emit('ready');
+});
 
+app.use(passport.initialize());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

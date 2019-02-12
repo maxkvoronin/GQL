@@ -85,17 +85,27 @@ module.exports.editPost = async (req, res, next) => {
 };
 
 module.exports.deletePost = async (req, res, next) => {
-  try {
-    await this.deletePicture(req.params.postId);
-    await PostModel.deleteOne().where({ _id: req.params.postId}).exec();
-  //todo delete likes
-    await CommentModel.deleteMany().where({ post: req.params.postId }).exec();
+    try {
+        await this.deletePicture(req.params.postId);
+        await PostModel.deleteOne().where({ _id: req.params.postId}).exec();
+        //todo delete likes
+        await CommentModel.deleteMany().where({ post: req.params.postId }).exec();
 
-    res.status(204).json({ success: true });
+        res.status(204).json({ success: true });
 
-  } catch (err) {
-    next(err);
-  }
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.deletePosts = async (req, res, next) => {
+    try {
+        await PostModel.deleteMany().where({}).exec();
+        //await CommentModel.deleteMany().where({ post: req.params.postId }).exec();
+        res.status(204).json({ success: true });
+    } catch (err) {
+        next(err);
+    }
 };
 
 module.exports.deletePicture = function (postId) {
@@ -108,7 +118,7 @@ module.exports.deletePicture = function (postId) {
       });
 };
 
-module.exports.getPosts = function (authUserId, page, searchTxt = '') {
+module.exports.getPosts = function (authUserId, page = 1, searchTxt = '') {
   return PostModel.aggregate([
     { $match: {
         text: { $regex: new RegExp(searchTxt) } } },
