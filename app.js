@@ -6,8 +6,16 @@ const logger = require('morgan');
 const hbs = require('hbs');
 const fileUpload = require('express-fileupload');
 
+const { ApolloServer } = require('apollo-server-express');
+
+const { resolvers } = require('./resolvers');
+const { typeDefs } = require('./schema');
+
+const server = new ApolloServer({ typeDefs, resolvers });
+
 const passport = require('passport');
 require('./configs/passport.config')(passport);
+
 const m = require('./configs/mongoose.config');
 
 const indexRouter = require('./routes/index');
@@ -38,9 +46,10 @@ app.use(logger('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+server.applyMiddleware({ app });
 
 app.use('/', indexRouter);
 app.use('/login', loginPageRouter);

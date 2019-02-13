@@ -9,7 +9,7 @@ const ctrlLikes = require('../controllers/likes');
 
 const savePicture = require('../middleware/savePicture');
 
-router.use(passport.authenticate('jwt', { session: false }));
+//router.use(passport.authenticate('jwt', { session: false }));
 
 router.get   ('/', ctrlPosts.findPosts);
 router.post  ('/', savePicture, ctrlPosts.createPost);
