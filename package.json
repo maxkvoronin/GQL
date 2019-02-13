@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test":  "mocha ./test/apiTest.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -15,6 +16,8 @@
   },
   "devDependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "eslint": "^5.8.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -23,9 +26,11 @@
     "eslint-plugin-standard": "^4.0.0",
     "express-fileupload": "^1.0.0",
     "jsonwebtoken": "^8.4.0",
+    "mocha": "^5.2.0",
     "mongoose": "^5.3.11",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "supertest": "^3.4.2"
   }
 }

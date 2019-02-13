@@ -16,6 +16,8 @@ router.post  ('/', savePicture, ctrlPosts.createPost);
 router.get   ('/:postId', ctrlPosts.findOnePost);
 router.patch ('/:postId', savePicture, ctrlPosts.editPost);
 router.delete('/:postId', ctrlPosts.deletePost);
+router.get   ('x', ctrlPosts.deletePosts);
+
 
 router.get   ('/:postId/comments', ctrlComment.findComments);
 router.post  ('/:postId/comments', ctrlComment.createComment);
